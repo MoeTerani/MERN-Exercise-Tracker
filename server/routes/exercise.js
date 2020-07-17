@@ -42,4 +42,34 @@ router.get('/:id', function (req, res) {
         res.status(400).json('Error' + err);
     });
 });
+router.delete('/:id', function (req, res) {
+    var id = req.params.id;
+    Exercise.findByIdAndDelete(id)
+        .then(function (Exercise) {
+        return res
+            .status(200)
+            .json("Exercise with the id:" + id + " was seccessfully deleted");
+    })
+        .catch(function (err) {
+        res.status(400).json('Error' + err);
+    });
+});
+router.post('/update/:id', function (req, res) {
+    console.log(req.body);
+    var id = req.params.id;
+    Exercise.findById(id)
+        .then(function (exercise) {
+        exercise.userName = req.body.userName;
+        exercise.description = req.body.description;
+        exercise.duration = Number(req.body.duration);
+        exercise.date = Date.parse(req.body.date);
+        exercise
+            .save()
+            .then(function () {
+            return res.status(200).json("Exercise with id: " + id + " updated successfully");
+        })
+            .catch(function (err) { return res.status(400).json('Error' + err.message); });
+    })
+        .catch(function (err) { return res.status(500).json('Error' + err.message); });
+});
 module.exports = router;

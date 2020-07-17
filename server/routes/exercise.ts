@@ -40,4 +40,44 @@ router.get('/:id', (req: express.Request, res: express.Response) => {
     });
 });
 
+router.delete('/:id', (req: express.Request, res: express.Response) => {
+  const id = req.params.id;
+  Exercise.findByIdAndDelete(id)
+    .then((Exercise: object) =>
+      res
+        .status(200)
+        .json(`Exercise with the id:${id} was seccessfully deleted`)
+    )
+    .catch((err: Error) => {
+      res.status(400).json('Error' + err);
+    });
+});
+
+router.post('/update/:id', (req: express.Request, res: express.Response) => {
+  console.log(req.body);
+  const id = req.params.id;
+  interface Exercise {
+    [x: string]: any;
+    userName: string;
+    description: string;
+    duration: number;
+    date: number;
+  }
+  Exercise.findById(id)
+    .then((exercise: Exercise) => {
+      exercise.userName = req.body.userName;
+      exercise.description = req.body.description;
+      exercise.duration = Number(req.body.duration);
+      exercise.date = Date.parse(req.body.date);
+
+      exercise
+        .save()
+        .then(() =>
+          res.status(200).json(`Exercise with id: ${id} updated successfully`)
+        )
+        .catch((err: Error) => res.status(400).json('Error' + err.message));
+    })
+    .catch((err: Error) => res.status(500).json('Error' + err.message));
+});
+
 module.exports = router;
