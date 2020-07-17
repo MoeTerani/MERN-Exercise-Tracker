@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -8,11 +9,11 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
-      minLength: 3,
+      minlength: 3,
     },
   },
   {
-    timestamp: true,
+    timestamps: true,
   }
 );
 

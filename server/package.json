@@ -13,10 +13,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
     "mongoose": "^5.9.24"
   },
   "devDependencies": {
-    "@types/node": "^14.0.23"
+    "@types/express": "^4.17.7",
+    "@types/node": "^14.0.23",
+    "express": "^4.17.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   }
 }

@@ -20,9 +20,7 @@ db.once('open', function () {
     // we're connected!
     console.log("DB connection established");
 });
-app.use('/', function (req, res) {
-    res.send('Server is up and running');
-});
+app.use('/', require('./routes/index'));
 app.listen(port, function () {
     console.log("Server listening on port " + port);
 });
