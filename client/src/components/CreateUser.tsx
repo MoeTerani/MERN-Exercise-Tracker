@@ -27,7 +27,7 @@ const CreateUser = (props: Props) => {
     console.log(user);
 
     axios
-      .post('http://localhost:5000/users', user)
+      .post('http://localhost:5000/users/', user)
       .then((res) => console.log(res.data));
   };
 
