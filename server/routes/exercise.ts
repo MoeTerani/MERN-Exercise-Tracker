@@ -1,17 +1,8 @@
 export {};
 import * as express from 'express';
-// const router: express.Router = express.Router();
 const router = express.Router();
 const Exercise = require('../models/exercise.model.js');
 
-/* router.get('/', async (req: express.Request, res: express.Response) => {
-  try {
-    const exercises = await Exercise.find();
-    res.json(exercises);
-  } catch (error) {
-    res.status(400).json(`Error: ${error}`);
-  }
-}); */
 router.get('/', (req: express.Request, res: express.Response) => {
   Exercise.find()
     .then((Exercise: object) => res.status(200).json(Exercise))

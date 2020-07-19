@@ -14,25 +14,27 @@ interface Props {
   key: string;
 }
 
-const Exercise = (props: Props) => (
-  <tr>
-    <td>{props.exercise.userName}</td>
-    <td>{props.exercise.description}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0, 10)}</td>
-    <td>
-      <Link to={'/edit/' + props.exercise._id}>edit</Link> |{' '}
-      <a
-        href='#'
-        onClick={() => {
-          props.deleteExercise(props.exercise._id);
-        }}
-      >
-        delete
-      </a>
-    </td>
-  </tr>
-);
+const ExerciseComponent = (props: Props) => {
+  return (
+    <tr>
+      <td>{props.exercise.userName}</td>
+      <td>{props.exercise.description}</td>
+      <td>{props.exercise.duration}</td>
+      <td>{props.exercise.date.substring(0, 10)}</td>
+      <td>
+        <Link to={'/edit/' + props.exercise._id}>edit</Link> |{' '}
+        <a
+          href='#'
+          onClick={() => {
+            props.deleteExercise(props.exercise._id);
+          }}
+        >
+          delete
+        </a>
+      </td>
+    </tr>
+  );
+};
 
 const ExercisesList = (props: Props) => {
   const [exercises, setExercises] = useState([]);
@@ -44,7 +46,6 @@ const ExercisesList = (props: Props) => {
         const usersArray = await axios.get('http://localhost:5000/exercises/');
 
         setExercises(usersArray.data);
-        console.log(exercises);
       } catch (err) {
         console.log(err.message);
       }
@@ -64,15 +65,18 @@ const ExercisesList = (props: Props) => {
     __v?: 0;
   }
   const deleteExercise = (id: string) => {
+    axios
+      .delete(`http://localhost:5000/exercises/${id}`)
+      .then((res) => console.log(res));
     setExercises(
       exercises.filter((exercise: exerciseObject) => exercise._id !== id)
     );
   };
 
   const exerciseList = (): any => {
-    state.exercises.map((currentexercise: exerciseObject) => {
+    return exercises.map((currentexercise: exerciseObject) => {
       return (
-        <Exercise
+        <ExerciseComponent
           exercise={currentexercise}
           deleteExercise={deleteExercise}
           key={currentexercise._id}
@@ -94,14 +98,8 @@ const ExercisesList = (props: Props) => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>{state ? exerciseList() : <h3>Is Loading...</h3>}</tbody>
+        <tbody>{exerciseList()}</tbody>
       </table>
-      {exercises.map((item: any) => (
-        <>
-          {' '}
-          <p>{item.description}</p> <br />{' '}
-        </>
-      ))}
     </div>
   );
 };
