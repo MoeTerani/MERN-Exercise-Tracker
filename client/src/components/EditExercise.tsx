@@ -3,7 +3,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 
-interface Props {}
+interface Props {
+  match: any;
+}
 
 const EditExercise = (props: Props) => {
   const [userName, setUserName] = useState('');
@@ -11,6 +13,26 @@ const EditExercise = (props: Props) => {
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
   const [users, setUsers] = useState<Array<string>>([]);
+  const [exercise, setExercise] = useState({});
+
+  useEffect(() => {
+    const id = props.match.params.id;
+    axios
+      .get(`http://localhost:5000/exercises/${id}`)
+      .then((res) => {
+        setUserName(res.data.userName);
+        setDescription(res.data.description);
+        setDuration(res.data.duration);
+        setDate(new Date(res.data.date));
+      })
+
+      .catch(function (error) {
+        console.log(error);
+      });
+    return () => {
+      console.log('CreateExercise Unmounted successfully');
+    };
+  }, []);
 
   useEffect(() => {
     axios.get('http://localhost:5000/users').then((res) => {
@@ -35,6 +57,7 @@ const EditExercise = (props: Props) => {
   };
   const onSubmit = (e: any) => {
     e.preventDefault();
+    const id = props.match.params.id;
 
     const exercise = {
       userName,
@@ -44,7 +67,7 @@ const EditExercise = (props: Props) => {
     };
     console.log(exercise);
     axios
-      .post('http://localhost:5000/exercises/', exercise)
+      .post('http://localhost:5000/exercises/update/' + id, exercise)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
 
@@ -104,7 +127,7 @@ const EditExercise = (props: Props) => {
         <div className='form-group'>
           <input
             type='submit'
-            value='Create Exercise Log'
+            value='Update The Exercise'
             className='btn btn-primary'
           />
         </div>
