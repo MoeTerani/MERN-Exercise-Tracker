@@ -13,7 +13,6 @@ const EditExercise = (props: Props) => {
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
   const [users, setUsers] = useState<Array<string>>([]);
-  const [exercise, setExercise] = useState({});
 
   useEffect(() => {
     const id = props.match.params.id;
@@ -83,7 +82,6 @@ const EditExercise = (props: Props) => {
         <div className='form-group'>
           <label>Username: </label>
           <select
-            // ref='userInput'
             required
             className='form-control'
             value={userName}

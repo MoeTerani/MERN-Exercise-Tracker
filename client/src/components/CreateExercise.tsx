@@ -60,7 +60,6 @@ const CreateExercise = (props: Props) => {
         <div className='form-group'>
           <label>Username: </label>
           <select
-            // ref='userInput'
             required
             className='form-control'
             value={userName}

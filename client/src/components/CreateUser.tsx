@@ -6,13 +6,6 @@ interface Props {}
 const CreateUser = (props: Props) => {
   const [userName, setUserName] = useState('');
 
-  // useEffect(() => {
-  //   //some code here
-  //   return () => {
-  //     console.log('CreateExercise Unmounted successfully');
-  //   };
-  // }, []);
-
   const onChangeUserName = (e: any) => {
     setUserName(e.target.value);
   };

@@ -53,7 +53,6 @@ router.delete('/:id', (req: express.Request, res: express.Response) => {
 });
 
 router.post('/update/:id', (req: express.Request, res: express.Response) => {
-  console.log(req.body);
   const id = req.params.id;
   interface Exercise {
     [x: string]: any;
